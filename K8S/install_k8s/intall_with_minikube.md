@@ -22,3 +22,9 @@ minikube start --nodes {node_number}  --apiserver-ips=<HOST_MACHINE_IP> --listen
 ```bash
 minikube profile list
 ```
+
+# see all service and port 
+
+```bash
+minikube service --all
+```

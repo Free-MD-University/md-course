@@ -18,7 +18,7 @@ this is the entry point of our instruction . it's a rest/cli api.
 
 ### Sheduler :
 
-define the action to do according to what we get from the api-server.
+define the action to do according to what we get from the api-server. reposnsible of pods creation and management.  
 
 ### Controler:
 

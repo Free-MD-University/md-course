@@ -4,3 +4,6 @@
 3. SIEM
 4. Firewall
 5. IDS
+6. CyberChef
+7. CAPA
+8. REMnux
