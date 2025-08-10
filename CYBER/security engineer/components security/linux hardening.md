@@ -45,3 +45,27 @@ Disabled account: michael:x:1000:1000:Michael:/home/michael:/sbin/nologin
 /var/log/wtmp - an access log that contains information for all users that have logged in and out of the system
 /var/log/kern.log - a log file containing messages from the kernel
 /var/log/boot.log - a log file that contains start-up messages and boot information
+
+
+ausearch can search log 
+```bash
+sudo ausearch --message USER_LOGIN --success no --interpret | grep ct=root # see all unauthorized login to root user
+```
+
+aureport allow to make a report of all log 
+
+## auth log 
+ausearch --message USER_LOGIN --success yes --interpret returns successful logins
+ ausearch --message USER_LOGIN --success no --interpret return no successful login
+
+ ## rsyslog 
+
+ rsyslog is a tools to log or resume log file in linux . 
+
+ check rsyslog installed :
+
+ ```bash 
+ sudo systemctl status rsyslog
+ ```
+
+ rsyslog config are stored inside : /etc/rsyslog.d
