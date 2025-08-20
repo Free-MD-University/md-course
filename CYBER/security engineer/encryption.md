@@ -74,6 +74,7 @@ even with q,g,A,B it's impossible to find a or b ! but the probleme if there is 
 
 # to see a key
 openssl dhparam -in dhparams.pem -text -noout
+openssl {protocol} -in {key} -text -noout
 
 ```
 
