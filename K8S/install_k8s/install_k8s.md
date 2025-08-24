@@ -1,3 +1,7 @@
+# add node
+sudo kubeadm token list
+sudo kubeadm join --token <token> <control-plane-host>:<control-plane-port> 
+
 # multi-node machine
 
 ## When:
@@ -12,3 +16,5 @@ or for testing purpose. the best way to do it so is to use kind .
 
 ## When :
 best pratice use only one worker node by VM/Machine.
+
+

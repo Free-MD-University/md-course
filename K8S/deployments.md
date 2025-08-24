@@ -24,6 +24,10 @@ spec:
     replicas: 5
 ```
 
+# selector
+even if you create a pods with the same selctector ! the pod will not be taken by the Deployment . 
+the selctor is inly in labels metadata. not all match metadata !
+
 and create with
 
 ```bash
@@ -48,8 +52,17 @@ we can see the history of the deployment RS :
     kubectl rollout history deploy/{deployment-name}
 ```
 
+we can rollout by doing :
+
+```bash
+    kubectl rollout undo deploy/{deploy name} # last version
+    kubectl rollout undo deploy/{deploy name} --to-revision={revision name} # last version
+```
+
+
 the status of a rollout / new image :
 
 ```bash
-kubectl rollout status deploy/ubuntu-replica-set
+    kubectl rollout status deploy/ubuntu-replica-set
 ```
+

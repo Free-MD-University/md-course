@@ -1,52 +1,82 @@
-a node port is a reverse proxy that allow to define a port in the master plane that will be reversed to the inside port .
+a load balncer use a automatic assign ip from the cloud provider. 
+this work with AWS,GCP,AZURE. 
+a load balancer recevie a IP automaticaly . you can get it in external ip.
+if you use a provider not compatibel or hetzner you need to use metallb.
 
-like nginx it will be :
+metallb
 
-client --> access to cluster IP port of the nodePort (30000) -> master node get the connection --> pod to targetPort
+# exemple
 
-there will 2(3) type of port to define :
+here there is something special, the port is the port that the loadbalncer will listen (outside) and the name will give the port of the pod to listen soo in the pod definition you have to declare pods with name 
 
--   port : like the target pod need to define both of them.
--   TagetPort : the target port inside the pod
--   NodePort : the port to receive the connection
-
-and you have to use a selector to say which pod will be used for load balencer .
-
-if you see my the python exemple
-
-```yml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  annotations:
-    kubernetes.io/change-cause: "new-image"
-  name: fastapi-deployment
-spec:
-  selector:
-    matchLabels:
-      app: ubuntu-instance
-  template:
-    metadata:
-      labels:
-        app: ubuntu-instance
-    spec:
-      containers:
-      - name: fastapi
-        imagePullPolicy: Always
-        image: acher1234/python-hello-world-with-random-endpoint-machine:first_version
-  replicas: 5
---------
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
-  name: sampleweb
+  name: release-name-traefik
+  namespace: default
+  labels:
+    app.kubernetes.io/name: traefik
+    app.kubernetes.io/instance: release-name-default
+    helm.sh/chart: traefik-37.0.0
+    app.kubernetes.io/managed-by: Helm
+  annotations:
 spec:
   type: NodePort
-  ports:
-    - protocol: TCP
-      port: 80
-      nodePort: 30001
-      targetPort: 80
   selector:
-      app: ubuntu-instance
-```
+    app.kubernetes.io/name: traefik
+    app.kubernetes.io/instance: release-name-default
+  ports:
+  - port: 8000
+    name: web
+    targetPort: 8000
+    protocol: TCP
+  - port: 8443
+    name: websecure
+    targetPort: 8443
+    protocol: TCP
+
+-----
+spec:
+      serviceAccountName: release-name-traefik
+      automountServiceAccountToken: true
+      terminationGracePeriodSeconds: 60
+      hostNetwork: false
+      containers:
+      - image: docker.io/traefik:v3.5.0
+        imagePullPolicy: IfNotPresent
+        name: release-name-traefik
+        resources:
+        readinessProbe:
+          httpGet:
+            path: /ping
+            port: 8080
+            scheme: HTTP
+          failureThreshold: 1
+          initialDelaySeconds: 2
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 2
+        livenessProbe:
+          httpGet:
+            path: /ping
+            port: 8080
+            scheme: HTTP
+          failureThreshold: 3
+          initialDelaySeconds: 2
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 2
+        lifecycle:
+        ports:
+        - name: metrics
+          containerPort: 9100
+          protocol: TCP
+        - name: traefik
+          containerPort: 8080
+          protocol: TCP
+        - name: web
+          containerPort: 8000
+          protocol: TCP
+        - name: websecure
+          containerPort: 8443
+          protocol: TCP

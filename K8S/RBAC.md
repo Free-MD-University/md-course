@@ -85,6 +85,8 @@ rules:
       verbs: ["get", "watch", "list"]
 ```
 
+there is predefined role like : cluster-admin 
+
 # Role binding :
 
 to give to a user a role or cluster role we use a Role binding object
