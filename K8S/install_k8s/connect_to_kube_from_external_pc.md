@@ -15,14 +15,17 @@ and change the access with users
 
 ```yaml
 users:
+///// OR
 - name: kubernetes-admin
   user:
     client-certificate-data: <base64 PEM>
     client-key-data: <base64 PEM>
+///// OR
 - name: kubernetes-admin-with-cert-path
   user:
     client-certificate: /home/user/.kube/client.crt
     client-key: /home/user/.kube/client.key
+///// OR
 - name: admin 
   user: 
     token: bgoshuzbjkvamsxirhmtvouqtpttfzignqeeyrmmbzudmoytzlswohufuesu
