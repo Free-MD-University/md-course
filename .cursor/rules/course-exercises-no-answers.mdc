@@ -1,0 +1,34 @@
+---
+description: Rédiger les exercices de cours sans donner les réponses — l'apprenant doit découvrir seul
+globs: Devops/**/*.md,Elastic/**/*.md
+alwaysApply: true
+---
+
+# Exercices de cours — pas de réponses
+
+Lors de la création ou modification de fichiers d'exercices (`.md` dans ce repo) :
+
+## Interdit sans demande explicite de l'utilisateur
+
+- Corrigés, solutions, sections `<details>` avec la réponse
+- Tableaux déjà remplis quand l'exercice demande de les compléter
+- Explications qui répondent directement aux questions posées dans l'exercice
+- Exemples YAML/code complets et fonctionnels quand l'objectif est de les construire
+- Formules de calcul avec le résultat déjà calculé
+- Listes « problème 1, 2, 3 » avec les réponses rédigées (supply chain, sécurité, etc.)
+
+## Autorisé
+
+- Objectif, contraintes, tâches numérotées
+- **Questions ouvertes** sans réponse
+- **Indices** qui orientent vers la doc officielle, sans dévoiler la solution
+- Vocabulaire minimal (noms de clés YAML, chemins de fichiers) si indispensable à la compréhension de l'énoncé
+- Exemples **incomplets** ou **squelettes** (`...`, `# à compléter`)
+- Liens vers documentation externe
+- Checklist de validation (« vous devez être capable de… ») sans dire comment
+
+## Ton
+
+- Tutoyer ou vouvoyer selon le fichier existant
+- Style pédagogique : guider, ne pas résoudre
+- Si l'utilisateur demande explicitement un corrigé, le fournir dans le chat ou une section séparée clairement nommée « Corrigé (formateur) »
